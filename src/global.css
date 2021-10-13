@@ -1,0 +1,25 @@
+:root {
+  --black-1: #000000;
+  --black-2: #161616;
+  --grey-1: #999999;
+  --white-1: #ffffff;
+  --white-2: #fafafa;
+}
+
+html,
+body {
+  background-color: var(--black-2);
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+}
