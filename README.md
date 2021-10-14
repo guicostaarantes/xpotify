@@ -1,4 +1,3 @@
 Missing:
 
-- Env vars
 - Typescript
