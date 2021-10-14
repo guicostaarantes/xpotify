@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     "eslint:recommended",
@@ -24,7 +25,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "simple-import-sort/imports": [
       "error",
-      { groups: [["^[^#.]"], ["#/"], ["./"]] },
+      { groups: [["^[^#.]"], ["#/"], ["[.]/"]] },
     ],
     "simple-import-sort/exports": "error",
   },
