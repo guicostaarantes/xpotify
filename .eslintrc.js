@@ -8,8 +8,10 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -17,8 +19,9 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "prettier", "simple-import-sort"],
+  plugins: ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
   rules: {
+    "@typescript-eslint/no-unused-vars": "error",
     "no-restricted-imports": ["error", { patterns: ["..*", "modules*"] }],
     "prettier/prettier": "error",
     "react/prop-types": "off",

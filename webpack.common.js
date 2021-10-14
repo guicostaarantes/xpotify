@@ -10,6 +10,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: ["ts-loader"],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
@@ -39,5 +44,6 @@ module.exports = {
     alias: {
       "#": path.resolve(__dirname, "src", "modules"),
     },
+    extensions: [".tsx", ".ts", ".js"],
   },
 };

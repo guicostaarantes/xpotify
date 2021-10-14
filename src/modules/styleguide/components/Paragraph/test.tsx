@@ -3,7 +3,7 @@ import React from "react";
 
 import Paragraph from "./index";
 
-it("should render a h1", () => {
+it("should render a paragraph", () => {
   render(<Paragraph>Test</Paragraph>);
 
   const p = screen.getByText("Test");
