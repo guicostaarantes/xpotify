@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Index from "#/start/pages/Index";
 
 import "./global.css";
-import Index from "./modules/start/pages/Index";
 
 const XpotifyApp = () => (
   <BrowserRouter>

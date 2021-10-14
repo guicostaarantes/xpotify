@@ -1,6 +1,7 @@
 import React from "react";
 
-import MainTitle from "../../../styleguide/components/MainTitle";
+import MainTitle from "#/styleguide/components/MainTitle";
+
 import styles from "./style.css";
 
 const Index = () => (
