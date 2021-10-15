@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
 import {
@@ -12,15 +13,30 @@ import Paragraph from "#/styleguide/components/Paragraph";
 
 import styles from "./style.css";
 
+const userMessage = (
+  status: ApplicationState["spotify"]["fetchUserStatus"],
+): string | JSX.Element => {
+  switch (status) {
+    case "idle":
+      return "Entre na nossa plataforma inserindo um token do Spotify abaixo";
+    case "loading":
+      return "Carregando...";
+    case "success":
+      return <Redirect to="/" />;
+    case "fail":
+      return "Insira um token válido";
+  }
+};
+
 const Index = () => {
-  const token = useSelector((store: ApplicationState) => store.spotify.token);
-  const userName = useSelector(
-    (store: ApplicationState) => store.spotify.userName,
+  const fetchUserStatus = useSelector(
+    (store: ApplicationState) => store.spotify.fetchUserStatus,
   );
+  const token = useSelector((store: ApplicationState) => store.spotify.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setUserDataFromToken(token));
+    if (token) dispatch(setUserDataFromToken(token));
   }, []);
 
   const handleSetToken = (event: ChangeEvent<HTMLInputElement>) =>
@@ -28,17 +44,16 @@ const Index = () => {
 
   return (
     <div className={styles.container}>
-      <MainTitle>Hello Xpotify</MainTitle>
+      <MainTitle>Xpotify</MainTitle>
+      <Paragraph className={styles.tokenParagraph}>
+        {userMessage(fetchUserStatus)}
+      </Paragraph>
       <Input
-        placeholder="Insira o token"
+        className={styles.longInput}
+        placeholder="Insira um token válido para continuar"
         onChange={handleSetToken}
         value={token}
       />
-      <Paragraph>
-        {userName
-          ? `Seja bem-vindo ${userName}`
-          : `Digite um token válido para continuar`}
-      </Paragraph>
     </div>
   );
 };
