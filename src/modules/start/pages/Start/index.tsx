@@ -39,16 +39,45 @@ const StartPage = () => {
         placeholder="Comece a escrever..."
         value={searchString}
       />
-      {searchResult.albums?.items ? (
+      {searchResult.albums?.items.length ? (
         <>
           <h3 className={styles.sectionTitle}>Álbuns</h3>
           <div className={styles.albumCardGrid}>
             {searchResult.albums.items.map((album) => (
               <AlbumCard
                 key={album.id}
-                src={album.images[1].url}
+                src={album.images?.[0]?.url}
                 primaryText={album.name}
                 secondaryText={album.artists[0].name}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+      {searchResult.artists?.items.length ? (
+        <>
+          <h3 className={styles.sectionTitle}>Artistas</h3>
+          <div className={styles.albumCardGrid}>
+            {searchResult.artists.items.map((artist) => (
+              <AlbumCard
+                key={artist.id}
+                src={artist.images?.[0]?.url}
+                primaryText={artist.name}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+      {searchResult.tracks?.items.length ? (
+        <>
+          <h3 className={styles.sectionTitle}>Músicas</h3>
+          <div className={styles.albumCardGrid}>
+            {searchResult.tracks.items.map((track) => (
+              <AlbumCard
+                key={track.id}
+                src={track.album.images?.[0]?.url}
+                primaryText={track.name}
+                secondaryText={track.artists[0].name}
               />
             ))}
           </div>

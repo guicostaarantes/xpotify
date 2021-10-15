@@ -63,7 +63,9 @@ export const setSearchResultFromSearchString =
         const response = await fetch(
           `${
             process.env.SPOTIFY_API_BASE_URL
-          }/search?type=album,artist,track&query=${encodeURI(searchString)}`,
+          }/search?type=album,artist,track&limit=4&query=${encodeURI(
+            searchString,
+          )}`,
           {
             method: "GET",
             headers: {

@@ -5,10 +5,14 @@ import styles from "./style.css";
 type AlbumCardProps = {
   src: string;
   primaryText: string;
-  secondaryText: string;
+  secondaryText?: string;
 };
 
-const AlbumCard = ({ src, primaryText, secondaryText }: AlbumCardProps) => (
+const AlbumCard = ({
+  src,
+  primaryText,
+  secondaryText = "",
+}: AlbumCardProps) => (
   <div className={styles.container}>
     <img className={styles.img} src={src} alt={primaryText} />
     <div className={styles.primaryText}>{primaryText}</div>

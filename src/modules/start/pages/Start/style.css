@@ -15,6 +15,7 @@
 .bigInput {
   font-size: 24px;
   font-weight: 500;
+  margin-bottom: 32px;
   width: calc(100% - 16px);
 }
 
