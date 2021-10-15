@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type SpotifyState = {
+export type UserState = {
   fetchUserStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
   token: string;
   userName: string;
 };
 
-const initialState: SpotifyState = {
+const initialState: UserState = {
   fetchUserStatus: "idle",
   typing: 0,
   token: localStorage.getItem("token") || "",
@@ -15,29 +15,26 @@ const initialState: SpotifyState = {
 };
 
 const setFetchUserStatusReducer = (
-  state: SpotifyState,
-  action: { payload: SpotifyState["fetchUserStatus"] },
+  state: UserState,
+  action: { payload: UserState["fetchUserStatus"] },
 ) => {
   state.fetchUserStatus = action.payload;
 };
 
-const setTypingReducer = (state: SpotifyState, action: { payload: number }) => {
+const setTypingReducer = (state: UserState, action: { payload: number }) => {
   state.typing = action.payload;
 };
 
-const setTokenReducer = (state: SpotifyState, action: { payload: string }) => {
+const setTokenReducer = (state: UserState, action: { payload: string }) => {
   state.token = action.payload;
 };
 
-const setUserNameReducer = (
-  state: SpotifyState,
-  action: { payload: string },
-) => {
+const setUserNameReducer = (state: UserState, action: { payload: string }) => {
   state.userName = action.payload;
 };
 
-const spotifySlice = createSlice({
-  name: "spotify",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     setFetchUserStatus: setFetchUserStatusReducer,
@@ -47,10 +44,10 @@ const spotifySlice = createSlice({
   },
 });
 
-export const spotifyReducer = spotifySlice.reducer;
+export const userReducer = userSlice.reducer;
 
 const { setFetchUserStatus, setTyping, setToken, setUserName } =
-  spotifySlice.actions;
+  userSlice.actions;
 
 export const setUserDataFromToken = (token: string) => async (dispatch) => {
   try {
@@ -85,7 +82,7 @@ export const setTokenDebounced =
     dispatch(setTyping(typing));
     dispatch(setToken(value));
     setTimeout(() => {
-      if (getState().spotify.typing === typing) {
+      if (getState().user.typing === typing) {
         localStorage.setItem("token", value);
         dispatch(setTyping(0));
         if (value) dispatch(setUserDataFromToken(value));
