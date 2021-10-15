@@ -15,8 +15,8 @@ const AlbumCard = ({
 }: AlbumCardProps) => (
   <div className={styles.container}>
     <img className={styles.img} src={src} alt={primaryText} />
-    <div className={styles.primaryText}>{primaryText}</div>
-    <div className={styles.secondaryText}>{secondaryText}</div>
+    <p className={styles.primaryText}>{primaryText}</p>
+    <p className={styles.secondaryText}>{secondaryText}</p>
   </div>
 );
 
