@@ -1,3 +1,15 @@
-.hello {
-  text-align: center;
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.longInput {
+  max-width: 100%;
+  width: 500px;
+}
+
+.tokenParagraph {
+  margin-bottom: 32px;
 }
