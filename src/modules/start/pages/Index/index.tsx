@@ -1,8 +1,11 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ApplicationState } from "#/shared/store";
-import { spotifyActions } from "#/shared/store/spotify";
+import {
+  setTokenDebounced,
+  setUserDataFromToken,
+} from "#/shared/store/spotify";
 import Input from "#/styleguide/components/Input";
 import MainTitle from "#/styleguide/components/MainTitle";
 import Paragraph from "#/styleguide/components/Paragraph";
@@ -11,20 +14,30 @@ import styles from "./style.css";
 
 const Index = () => {
   const token = useSelector((store: ApplicationState) => store.spotify.token);
+  const userName = useSelector(
+    (store: ApplicationState) => store.spotify.userName,
+  );
   const dispatch = useDispatch();
 
-  const { setToken } = spotifyActions;
+  useEffect(() => {
+    dispatch(setUserDataFromToken(token));
+  }, []);
 
   const handleSetToken = (event: ChangeEvent<HTMLInputElement>) =>
-    dispatch(setToken(event.target.value));
+    dispatch(setTokenDebounced(event.target.value, 500));
 
   return (
     <div className={styles.container}>
       <MainTitle>Hello Xpotify</MainTitle>
-      <Input placeholder="Insira o token" onChange={handleSetToken} />
+      <Input
+        placeholder="Insira o token"
+        onChange={handleSetToken}
+        value={token}
+      />
       <Paragraph>
-        Essa aplicação vai se comunicar com o Spotify pela sua API disponível em{" "}
-        {process.env.SPOTIFY_API_BASE_URL} utilizando o token {token}
+        {userName
+          ? `Seja bem-vindo ${userName}`
+          : `Digite um token válido para continuar`}
       </Paragraph>
     </div>
   );

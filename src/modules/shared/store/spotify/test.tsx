@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import React, { useRef } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 
-import { spotifyActions, spotifyReducer } from "./index";
+import { setTokenDebounced, spotifyReducer } from "./index";
 
 const store = configureStore({
   reducer: spotifyReducer,
@@ -16,9 +16,8 @@ const Component = () => {
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { setToken } = spotifyActions;
-
-  const handleSetToken = () => dispatch(setToken(inputRef.current?.value));
+  const handleSetToken = () =>
+    dispatch(setTokenDebounced(inputRef.current?.value, 0));
 
   return (
     <div>
