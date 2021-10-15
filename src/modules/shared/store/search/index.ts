@@ -69,7 +69,7 @@ export const setSearchResultFromSearchString =
           {
             method: "GET",
             headers: {
-              authorization: `Bearer ${getState().spotify.token}`,
+              authorization: `Bearer ${getState().user.token}`,
             },
           },
         );
