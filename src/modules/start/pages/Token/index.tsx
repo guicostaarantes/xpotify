@@ -28,7 +28,7 @@ const userMessage = (
   }
 };
 
-const Index = () => {
+const TokenPage = () => {
   const fetchUserStatus = useSelector(
     (store: ApplicationState) => store.spotify.fetchUserStatus,
   );
@@ -58,4 +58,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default TokenPage;
