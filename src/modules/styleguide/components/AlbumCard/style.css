@@ -1,0 +1,37 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.img {
+  width: 200px;
+  height: 200px;
+}
+
+.primaryText {
+  color: var(--white-2);
+  display: block;
+  font-size: 16px;
+  margin: 0;
+  margin-top: 12px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 240px;
+}
+
+.secondaryText {
+  color: var(--grey-1);
+  display: block;
+  font-size: 14px;
+  margin: 0;
+  margin-top: 4px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 240px;
+}

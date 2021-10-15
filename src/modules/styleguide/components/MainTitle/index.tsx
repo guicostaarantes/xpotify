@@ -4,7 +4,7 @@ import styles from "./style.css";
 
 const MainTitle = ({
   children,
-  className,
+  className = "",
   ...rest
 }: BaseHTMLAttributes<HTMLHeadingElement>) => (
   <h1 className={`${styles.mainTitle} ${className}`} {...rest}>

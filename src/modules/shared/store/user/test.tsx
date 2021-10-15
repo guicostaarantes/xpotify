@@ -3,10 +3,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import React, { useRef } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 
-import { setTokenDebounced, spotifyReducer } from "./index";
+import { setTokenDebounced, userReducer } from "./index";
 
 const store = configureStore({
-  reducer: spotifyReducer,
+  reducer: userReducer,
 });
 
 type ApplicationState = ReturnType<typeof store.getState>;

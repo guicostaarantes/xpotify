@@ -4,7 +4,7 @@ import styles from "./style.css";
 
 const Paragraph = ({
   children,
-  className,
+  className = "",
   ...rest
 }: BaseHTMLAttributes<HTMLParagraphElement>) => (
   <p className={`${styles.paragraph} ${className}`} {...rest}>

@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
-import {
-  setTokenDebounced,
-  setUserDataFromToken,
-} from "#/shared/store/spotify";
+import { setTokenDebounced, setUserDataFromToken } from "#/shared/store/user";
 import Input from "#/styleguide/components/Input";
 import MainTitle from "#/styleguide/components/MainTitle";
 import Paragraph from "#/styleguide/components/Paragraph";
@@ -14,7 +11,7 @@ import Paragraph from "#/styleguide/components/Paragraph";
 import styles from "./style.css";
 
 const userMessage = (
-  status: ApplicationState["spotify"]["fetchUserStatus"],
+  status: ApplicationState["user"]["fetchUserStatus"],
 ): string | JSX.Element => {
   switch (status) {
     case "idle":
@@ -28,11 +25,11 @@ const userMessage = (
   }
 };
 
-const Index = () => {
+const TokenPage = () => {
   const fetchUserStatus = useSelector(
-    (store: ApplicationState) => store.spotify.fetchUserStatus,
+    (store: ApplicationState) => store.user.fetchUserStatus,
   );
-  const token = useSelector((store: ApplicationState) => store.spotify.token);
+  const token = useSelector((store: ApplicationState) => store.user.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,4 +55,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default TokenPage;
