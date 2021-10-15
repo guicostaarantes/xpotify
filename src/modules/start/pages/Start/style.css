@@ -2,14 +2,19 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 16px;
 }
 
-.longInput {
-  max-width: 100%;
-  width: 500px;
+.bigInput {
+  font-size: 24px;
+  font-weight: 500;
+  width: 100%;
 }
 
-.tokenParagraph {
-  margin-bottom: 32px;
+@media (min-width: 600px) {
+  .bigInput {
+    font-size: 48px;
+  }
 }

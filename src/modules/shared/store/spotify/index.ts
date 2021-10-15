@@ -10,7 +10,7 @@ export type SpotifyState = {
 const initialState: SpotifyState = {
   fetchUserStatus: "idle",
   typing: 0,
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem("token") || "",
   userName: "",
 };
 
@@ -54,20 +54,24 @@ const { setFetchUserStatus, setTyping, setToken, setUserName } =
 
 export const setUserDataFromToken = (token: string) => async (dispatch) => {
   try {
-    dispatch(setFetchUserStatus("loading"));
-    const response = await fetch(`${process.env.SPOTIFY_API_BASE_URL}/me`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.status === 200) {
-      const data = await response.json();
-      dispatch(setFetchUserStatus("success"));
-      dispatch(setUserName(data.display_name));
+    if (token) {
+      dispatch(setFetchUserStatus("loading"));
+      const response = await fetch(`${process.env.SPOTIFY_API_BASE_URL}/me`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        const data = await response.json();
+        dispatch(setFetchUserStatus("success"));
+        dispatch(setUserName(data.display_name));
+      } else {
+        dispatch(setFetchUserStatus("fail"));
+        dispatch(setUserName(""));
+      }
     } else {
-      dispatch(setFetchUserStatus("fail"));
-      dispatch(setUserName(""));
+      dispatch(setFetchUserStatus("idle"));
     }
   } catch {
     dispatch(setFetchUserStatus("fail"));
