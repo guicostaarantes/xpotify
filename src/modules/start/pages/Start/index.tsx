@@ -8,10 +8,14 @@ import {
 } from "#/shared/store/search";
 import AlbumCard from "#/styleguide/components/AlbumCard";
 import Input from "#/styleguide/components/Input";
+import Paragraph from "#/styleguide/components/Paragraph";
 
 import styles from "./style.css";
 
 const StartPage = () => {
+  const fetchSearchStatus = useSelector(
+    (store: ApplicationState) => store.search.fetchSearchStatus,
+  );
   const searchResult = useSelector(
     (store: ApplicationState) => store.search.searchResult,
   );
@@ -82,6 +86,26 @@ const StartPage = () => {
             ))}
           </div>
         </>
+      ) : null}
+      {fetchSearchStatus === "idle" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Termos buscados recentemente (WIP)
+        </Paragraph>
+      ) : fetchSearchStatus === "loading" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Carregando resultados...
+        </Paragraph>
+      ) : fetchSearchStatus === "fail" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Ocorreu um erro na sua busca. Tente novamente mais tarde.
+        </Paragraph>
+      ) : fetchSearchStatus === "success" &&
+        !searchResult.albums?.items.length &&
+        !searchResult.artists?.items.length &&
+        !searchResult.tracks?.items.length ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Não foram encontrados resultados com esse termo. Tente novamente.
+        </Paragraph>
       ) : null}
     </div>
   );
