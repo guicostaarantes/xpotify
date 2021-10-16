@@ -60,6 +60,7 @@ export const setSearchResultFromSearchString =
     if (searchString) {
       try {
         dispatch(setFetchSearchStatus("loading"));
+        dispatch(setSearchResult({}));
         const response = await fetch(
           `${
             process.env.SPOTIFY_API_BASE_URL
@@ -80,12 +81,15 @@ export const setSearchResultFromSearchString =
           console.log({ data });
         } else {
           dispatch(setFetchSearchStatus("fail"));
+          dispatch(setSearchResult({}));
         }
       } catch {
         dispatch(setFetchSearchStatus("fail"));
+        dispatch(setSearchResult({}));
       }
     } else {
       dispatch(setFetchSearchStatus("idle"));
+      dispatch(setSearchResult({}));
     }
   };
 
@@ -98,7 +102,7 @@ export const setSearchStringDebounced =
       if (getState().search.typing === typing) {
         localStorage.setItem("searchString", value);
         dispatch(setTyping(0));
-        if (value) dispatch(setSearchResultFromSearchString(value));
+        dispatch(setSearchResultFromSearchString(value));
       }
     }, delay);
   };
