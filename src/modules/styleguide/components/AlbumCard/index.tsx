@@ -10,12 +10,17 @@ type AlbumCardProps = {
 };
 
 const AlbumCard = ({
-  onClick = () => 0,
+  onClick,
   src,
   primaryText,
   secondaryText = "",
 }: AlbumCardProps) => (
-  <div className={styles.container} onClick={onClick}>
+  <div
+    className={`${styles.container} ${
+      onClick ? styles.clickableContainer : ""
+    }`}
+    onClick={onClick || (() => 0)}
+  >
     <img
       className={styles.img}
       onError={(ev) =>
