@@ -46,7 +46,7 @@ const TokenPage = () => {
         {userMessage(fetchUserStatus)}
       </Paragraph>
       <Input
-        autocomplete="off"
+        autoComplete="off"
         className={styles.longInput}
         placeholder="Insira um token válido para continuar"
         onChange={handleSetToken}

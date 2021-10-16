@@ -3,7 +3,7 @@ import React, { BaseHTMLAttributes, RefObject } from "react";
 import styles from "./style.css";
 
 type InputProps = BaseHTMLAttributes<HTMLInputElement> & {
-  autocomplete?: "on" | "off";
+  autoComplete?: "on" | "off";
   innerRef?: RefObject<HTMLInputElement>;
   value?: string;
 };

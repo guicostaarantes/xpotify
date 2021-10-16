@@ -37,7 +37,7 @@ const StartPage = () => {
         Busque por artistas, álbuns ou músicas
       </label>
       <Input
-        autocomplete="off"
+        autoComplete="off"
         className={styles.bigInput}
         id="search"
         onChange={handleSetSearchString}
