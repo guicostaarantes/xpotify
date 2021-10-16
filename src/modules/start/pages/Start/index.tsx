@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
 import {
@@ -13,6 +14,8 @@ import Paragraph from "#/styleguide/components/Paragraph";
 import styles from "./style.css";
 
 const StartPage = () => {
+  const history = useHistory();
+
   const fetchSearchStatus = useSelector(
     (store: ApplicationState) => store.search.fetchSearchStatus,
   );
@@ -51,6 +54,7 @@ const StartPage = () => {
             {searchResult.albums.items.map((album) => (
               <AlbumCard
                 key={album.id}
+                onClick={() => history.push(`/album/${album.id}`)}
                 src={album.images?.[0]?.url}
                 primaryText={album.name}
                 secondaryText={album.artists[0].name}
@@ -66,6 +70,9 @@ const StartPage = () => {
             {searchResult.artists.items.map((artist) => (
               <AlbumCard
                 key={artist.id}
+                onClick={() =>
+                  history.push(`/albums/${encodeURI(artist.name)}`)
+                }
                 src={artist.images?.[0]?.url}
                 primaryText={artist.name}
               />

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import useArtistAlbums from "#/artist/hooks/useArtistAlbums";
 import AlbumCard from "#/styleguide/components/AlbumCard";
@@ -10,6 +10,7 @@ import styles from "./style.css";
 
 const ArtistAlbumsPage = () => {
   const { artistURLString } = useParams();
+  const history = useHistory();
 
   const { data, status } = useArtistAlbums(artistURLString);
 
@@ -29,6 +30,7 @@ const ArtistAlbumsPage = () => {
               {data.albums.items.map((album) => (
                 <AlbumCard
                   key={album.id}
+                  onClick={() => history.push(`/album/${album.id}`)}
                   src={album.images?.[0]?.url}
                   primaryText={album.name}
                   secondaryText={album.artists[0].name}
