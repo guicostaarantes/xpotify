@@ -58,6 +58,11 @@ export const userReducer = userSlice.reducer;
 
 const { setFetchUserStatus, setTyping, setToken, setUser } = userSlice.actions;
 
+export const invalidateToken = () => (dispatch) => {
+  dispatch(setFetchUserStatus("idle"));
+  dispatch(setToken(""));
+};
+
 export const setUserDataFromToken = (token: string) => async (dispatch) => {
   try {
     if (token) {
