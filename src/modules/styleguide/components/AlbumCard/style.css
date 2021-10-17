@@ -1,3 +1,12 @@
+.clickableContainer {
+  cursor: pointer;
+  transition: background ease-in-out 0.1s;
+}
+
+.clickableContainer:hover {
+  background: var(--black-3);
+}
+
 .container {
   align-items: center;
   display: flex;
@@ -20,7 +29,7 @@
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 240px;
+  width: 200px;
 }
 
 .secondaryText {
@@ -33,5 +42,5 @@
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 240px;
+  width: 200px;
 }

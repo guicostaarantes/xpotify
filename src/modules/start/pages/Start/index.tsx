@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
 import {
@@ -8,10 +9,16 @@ import {
 } from "#/shared/store/search";
 import AlbumCard from "#/styleguide/components/AlbumCard";
 import Input from "#/styleguide/components/Input";
+import Paragraph from "#/styleguide/components/Paragraph";
 
 import styles from "./style.css";
 
 const StartPage = () => {
+  const history = useHistory();
+
+  const fetchSearchStatus = useSelector(
+    (store: ApplicationState) => store.search.fetchSearchStatus,
+  );
   const searchResult = useSelector(
     (store: ApplicationState) => store.search.searchResult,
   );
@@ -33,6 +40,7 @@ const StartPage = () => {
         Busque por artistas, álbuns ou músicas
       </label>
       <Input
+        autoComplete="off"
         className={styles.bigInput}
         id="search"
         onChange={handleSetSearchString}
@@ -46,6 +54,7 @@ const StartPage = () => {
             {searchResult.albums.items.map((album) => (
               <AlbumCard
                 key={album.id}
+                onClick={() => history.push(`/album/${album.id}`)}
                 src={album.images?.[0]?.url}
                 primaryText={album.name}
                 secondaryText={album.artists[0].name}
@@ -61,6 +70,9 @@ const StartPage = () => {
             {searchResult.artists.items.map((artist) => (
               <AlbumCard
                 key={artist.id}
+                onClick={() =>
+                  history.push(`/albums/${encodeURI(artist.name)}`)
+                }
                 src={artist.images?.[0]?.url}
                 primaryText={artist.name}
               />
@@ -82,6 +94,26 @@ const StartPage = () => {
             ))}
           </div>
         </>
+      ) : null}
+      {fetchSearchStatus === "idle" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Termos buscados recentemente (WIP)
+        </Paragraph>
+      ) : fetchSearchStatus === "loading" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Carregando resultados...
+        </Paragraph>
+      ) : fetchSearchStatus === "fail" ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Ocorreu um erro na sua busca. Tente novamente mais tarde.
+        </Paragraph>
+      ) : fetchSearchStatus === "success" &&
+        !searchResult.albums?.items.length &&
+        !searchResult.artists?.items.length &&
+        !searchResult.tracks?.items.length ? (
+        <Paragraph className={styles.searchResultMessage}>
+          Não foram encontrados resultados com esse termo. Tente novamente.
+        </Paragraph>
       ) : null}
     </div>
   );

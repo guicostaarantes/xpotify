@@ -1,17 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import spotifyApi from "#/shared/spotifyApi";
+
 export type UserState = {
   fetchUserStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
   token: string;
-  userName: string;
+  user:
+    | {
+        name: string;
+        image: string;
+      }
+    | Record<string, never>;
 };
 
 const initialState: UserState = {
   fetchUserStatus: "idle",
   typing: 0,
   token: localStorage.getItem("token") || "",
-  userName: "",
+  user: {},
 };
 
 const setFetchUserStatusReducer = (
@@ -29,8 +36,11 @@ const setTokenReducer = (state: UserState, action: { payload: string }) => {
   state.token = action.payload;
 };
 
-const setUserNameReducer = (state: UserState, action: { payload: string }) => {
-  state.userName = action.payload;
+const setUserReducer = (
+  state: UserState,
+  action: { payload: UserState["user"] },
+) => {
+  state.user = action.payload;
 };
 
 const userSlice = createSlice({
@@ -40,39 +50,38 @@ const userSlice = createSlice({
     setFetchUserStatus: setFetchUserStatusReducer,
     setTyping: setTypingReducer,
     setToken: setTokenReducer,
-    setUserName: setUserNameReducer,
+    setUser: setUserReducer,
   },
 });
 
 export const userReducer = userSlice.reducer;
 
-const { setFetchUserStatus, setTyping, setToken, setUserName } =
-  userSlice.actions;
+const { setFetchUserStatus, setTyping, setToken, setUser } = userSlice.actions;
 
 export const setUserDataFromToken = (token: string) => async (dispatch) => {
   try {
     if (token) {
       dispatch(setFetchUserStatus("loading"));
-      const response = await fetch(`${process.env.SPOTIFY_API_BASE_URL}/me`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await spotifyApi("/me");
       if (response.status === 200) {
         const data = await response.json();
         dispatch(setFetchUserStatus("success"));
-        dispatch(setUserName(data.display_name));
+        dispatch(
+          setUser({
+            name: data.display_name,
+            image: data.images?.[0].url || "",
+          }),
+        );
       } else {
         dispatch(setFetchUserStatus("fail"));
-        dispatch(setUserName(""));
+        dispatch(setUser({}));
       }
     } else {
       dispatch(setFetchUserStatus("idle"));
     }
   } catch {
     dispatch(setFetchUserStatus("fail"));
-    dispatch(setUserName(""));
+    dispatch(setUser({}));
   }
 };
 
@@ -85,7 +94,7 @@ export const setTokenDebounced =
       if (getState().user.typing === typing) {
         localStorage.setItem("token", value);
         dispatch(setTyping(0));
-        if (value) dispatch(setUserDataFromToken(value));
+        dispatch(setUserDataFromToken(value));
       }
     }, delay);
   };

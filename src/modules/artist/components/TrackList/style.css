@@ -1,0 +1,25 @@
+.track {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 30px 1fr 60px;
+  list-style-type: none;
+  padding: 8px;
+}
+
+.trackDuration {
+  color: var(--grey-1);
+  text-align: end;
+}
+
+.trackList {
+  padding: 0;
+  width: 100%;
+}
+
+.trackNumber {
+  color: var(--grey-1);
+}
+
+.trackTitle {
+  color: var(--white-2);
+}

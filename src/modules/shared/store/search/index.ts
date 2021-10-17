@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import spotifyApi from "#/shared/spotifyApi";
+
 export type SearchState = {
   fetchSearchStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
@@ -56,22 +58,15 @@ const { setFetchSearchStatus, setTyping, setSearchResult, setSearchString } =
   searchSlice.actions;
 
 export const setSearchResultFromSearchString =
-  (searchString: string) => async (dispatch, getState) => {
+  (searchString: string) => async (dispatch) => {
     if (searchString) {
       try {
         dispatch(setFetchSearchStatus("loading"));
-        const response = await fetch(
-          `${
-            process.env.SPOTIFY_API_BASE_URL
-          }/search?type=album,artist,track&limit=4&query=${encodeURI(
+        dispatch(setSearchResult({}));
+        const response = await spotifyApi(
+          `/search?type=album,artist,track&limit=4&query=${encodeURI(
             searchString,
           )}`,
-          {
-            method: "GET",
-            headers: {
-              authorization: `Bearer ${getState().user.token}`,
-            },
-          },
         );
         if (response.status === 200) {
           const data = await response.json();
@@ -80,12 +75,15 @@ export const setSearchResultFromSearchString =
           console.log({ data });
         } else {
           dispatch(setFetchSearchStatus("fail"));
+          dispatch(setSearchResult({}));
         }
       } catch {
         dispatch(setFetchSearchStatus("fail"));
+        dispatch(setSearchResult({}));
       }
     } else {
       dispatch(setFetchSearchStatus("idle"));
+      dispatch(setSearchResult({}));
     }
   };
 
@@ -98,7 +96,7 @@ export const setSearchStringDebounced =
       if (getState().search.typing === typing) {
         localStorage.setItem("searchString", value);
         dispatch(setTyping(0));
-        if (value) dispatch(setSearchResultFromSearchString(value));
+        dispatch(setSearchResultFromSearchString(value));
       }
     }, delay);
   };

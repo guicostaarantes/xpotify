@@ -1,3 +1,7 @@
+.albumCard {
+  padding-top: 8px;
+}
+
 .container {
   align-items: center;
   display: flex;
@@ -7,10 +11,9 @@
   padding: 16px;
 }
 
-.longInput {
-  width: calc(100% - 16px);
-}
-
-.tokenParagraph {
-  margin-bottom: 32px;
+@media (min-width: 800px) {
+  .container {
+    align-items: flex-start;
+    flex-direction: row;
+  }
 }
