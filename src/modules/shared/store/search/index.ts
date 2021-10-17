@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import spotifyApi from "#/shared/spotifyApi";
+import { invalidateToken } from "#/shared/store/user";
 
 export type SearchState = {
   fetchSearchStatus: "idle" | "loading" | "success" | "fail";
@@ -74,6 +75,10 @@ export const setSearchResultFromSearchString =
           dispatch(setSearchResult(data));
           console.log({ data });
         } else {
+          const data = await response.json();
+          if (data.error?.message === "Invalid access token") {
+            dispatch(invalidateToken());
+          }
           dispatch(setFetchSearchStatus("fail"));
           dispatch(setSearchResult({}));
         }

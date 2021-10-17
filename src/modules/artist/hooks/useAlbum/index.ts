@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import spotifyApi from "#/shared/spotifyApi";
 import { ApplicationState } from "#/shared/store";
+import { invalidateToken } from "#/shared/store/user";
 
 const useAlbum = (albumId: string) => {
   const token = useSelector((store: ApplicationState) => store.user.token);
+  const dispatch = useDispatch();
 
   const [albumData, setAlbumData] = useState<any>({});
   const [fetchStatus, setFetchStatus] = useState<
@@ -22,6 +24,10 @@ const useAlbum = (albumId: string) => {
         setFetchStatus("success");
       } else {
         setFetchStatus("fail");
+        const data = await response.json();
+        if (data.error?.message === "Invalid access token") {
+          dispatch(invalidateToken());
+        }
       }
     })();
   }, [token]);

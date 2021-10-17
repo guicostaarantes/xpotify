@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AlbumPage from "#/artist/pages/Album";
 import ArtistAlbumsPage from "#/artist/pages/ArtistAlbums";
+import TokenWatcher from "#/shared/components/TokenWatcher";
 import store from "#/shared/store";
 import StartPage from "#/start/pages/Start";
 import TokenPage from "#/start/pages/Token";
@@ -14,6 +15,7 @@ import "./global.css";
 const XpotifyApp = () => (
   <Provider store={store}>
     <BrowserRouter>
+      <TokenWatcher />
       <Switch>
         <Route path="/albums/:artistURLString">
           <ArtistAlbumsPage />

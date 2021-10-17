@@ -9,7 +9,7 @@ import Paragraph from "#/styleguide/components/Paragraph";
 import styles from "./style.css";
 
 const AlbumPage = () => {
-  const { albumId } = useParams();
+  const { albumId } = useParams<{ albumId: string }>();
 
   const { data, status } = useAlbum(albumId);
 

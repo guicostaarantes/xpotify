@@ -9,7 +9,7 @@ import Paragraph from "#/styleguide/components/Paragraph";
 import styles from "./style.css";
 
 const ArtistAlbumsPage = () => {
-  const { artistURLString } = useParams();
+  const { artistURLString } = useParams<{ artistURLString: string }>();
   const history = useHistory();
 
   const { data, status } = useArtistAlbums(artistURLString);
