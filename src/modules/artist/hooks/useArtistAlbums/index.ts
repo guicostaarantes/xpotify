@@ -31,8 +31,7 @@ const useArtistAlbums = (artistURLString: string) => {
         if (!artistId) return;
       } else {
         setFetchStatus("fail");
-        const data = await artistResponse.json();
-        if (data.error?.message === "Invalid access token") {
+        if (artistResponse.status === 401) {
           dispatch(invalidateToken());
         }
         return;
@@ -45,8 +44,7 @@ const useArtistAlbums = (artistURLString: string) => {
         setAlbumsData(data);
         setFetchStatus("success");
       } else {
-        const data = await albumsResponse.json();
-        if (data.error?.message === "Invalid access token") {
+        if (albumsResponse.status === 401) {
           dispatch(invalidateToken());
         }
         setFetchStatus("fail");
