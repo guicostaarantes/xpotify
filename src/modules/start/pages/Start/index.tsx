@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
+import { selectTrack } from "#/shared/store/player";
 import {
   setSearchResultFromSearchString,
   setSearchStringDebounced,
@@ -87,6 +88,7 @@ const StartPage = () => {
             {searchResult.tracks.items.map((track) => (
               <AlbumCard
                 key={track.id}
+                onClick={() => dispatch(selectTrack(track))}
                 src={track.album.images?.[0]?.url}
                 primaryText={track.name}
                 secondaryText={track.artists[0].name}

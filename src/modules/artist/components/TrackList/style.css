@@ -1,9 +1,14 @@
 .track {
+  cursor: pointer;
   display: grid;
   gap: 8px;
   grid-template-columns: 30px 1fr 60px;
   list-style-type: none;
   padding: 8px;
+}
+
+.track:hover {
+  background: var(--black-3);
 }
 
 .trackDuration {
