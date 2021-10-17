@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import spotifyApi from "#/shared/spotifyApi";
+
 export type UserState = {
   fetchUserStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
@@ -60,12 +62,7 @@ export const setUserDataFromToken = (token: string) => async (dispatch) => {
   try {
     if (token) {
       dispatch(setFetchUserStatus("loading"));
-      const response = await fetch(`${process.env.SPOTIFY_API_BASE_URL}/me`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await spotifyApi("/me");
       if (response.status === 200) {
         const data = await response.json();
         dispatch(setFetchUserStatus("success"));

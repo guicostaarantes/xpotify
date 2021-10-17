@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import spotifyApi from "#/shared/spotifyApi";
 import { ApplicationState } from "#/shared/store";
 
 const useAlbum = (albumId: string) => {
@@ -14,15 +15,7 @@ const useAlbum = (albumId: string) => {
   useEffect(() => {
     (async () => {
       setFetchStatus("loading");
-      const response = await fetch(
-        `${process.env.SPOTIFY_API_BASE_URL}/albums/${albumId}`,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const response = await spotifyApi(`/albums/${albumId}`);
       if (response.status === 200) {
         const data = await response.json();
         setAlbumData(data);

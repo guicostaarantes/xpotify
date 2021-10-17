@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import spotifyApi from "#/shared/spotifyApi";
+
 export type SearchState = {
   fetchSearchStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
@@ -56,23 +58,15 @@ const { setFetchSearchStatus, setTyping, setSearchResult, setSearchString } =
   searchSlice.actions;
 
 export const setSearchResultFromSearchString =
-  (searchString: string) => async (dispatch, getState) => {
+  (searchString: string) => async (dispatch) => {
     if (searchString) {
       try {
         dispatch(setFetchSearchStatus("loading"));
         dispatch(setSearchResult({}));
-        const response = await fetch(
-          `${
-            process.env.SPOTIFY_API_BASE_URL
-          }/search?type=album,artist,track&limit=4&query=${encodeURI(
+        const response = await spotifyApi(
+          `/search?type=album,artist,track&limit=4&query=${encodeURI(
             searchString,
           )}`,
-          {
-            method: "GET",
-            headers: {
-              authorization: `Bearer ${getState().user.token}`,
-            },
-          },
         );
         if (response.status === 200) {
           const data = await response.json();

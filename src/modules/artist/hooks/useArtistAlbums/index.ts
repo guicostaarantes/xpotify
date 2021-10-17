@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import spotifyApi from "#/shared/spotifyApi";
 import { ApplicationState } from "#/shared/store";
 
 const useArtistAlbums = (artistURLString: string) => {
@@ -17,15 +18,10 @@ const useArtistAlbums = (artistURLString: string) => {
       setFetchStatus("loading");
       let artistId: string;
 
-      const artistResponse = await fetch(
-        `${process.env.SPOTIFY_API_BASE_URL}/search?type=artist&limit=1&query=${artistURLString}`,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        },
+      const artistResponse = await spotifyApi(
+        `/search?type=artist&limit=1&query=${artistURLString}`,
       );
+
       if (artistResponse.status === 200) {
         const data = await artistResponse.json();
         artistId = data.artists.items[0]?.id;
@@ -36,15 +32,8 @@ const useArtistAlbums = (artistURLString: string) => {
         return;
       }
 
-      const albumsResponse = await fetch(
-        `${process.env.SPOTIFY_API_BASE_URL}/artists/${artistId}/albums`,
-        {
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const albumsResponse = await spotifyApi(`/artists/${artistId}/albums`);
+
       if (albumsResponse.status === 200) {
         const data = await albumsResponse.json();
         setAlbumsData(data);
