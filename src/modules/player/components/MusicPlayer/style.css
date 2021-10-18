@@ -40,6 +40,10 @@
   color: var(--white-2);
 }
 
+.spaceHolder {
+  height: 92px;
+}
+
 .progressBar {
   height: 24px;
   background-color: transparent;

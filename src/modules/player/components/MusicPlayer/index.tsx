@@ -54,35 +54,41 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div className={styles.container}>
-      {track.preview_url ? (
-        <div className={styles.player}>
-          <audio
-            ref={audioRef}
-            autoPlay
-            preload="metadata"
-            src={track.preview_url}
-            onLoadedMetadata={handleLoadedMetaData}
-          />
-          <button className={styles.playPauseButton} onClick={handlePlayPause}>
-            {isPlaying ? <IoPause /> : <IoPlay style={{ paddingLeft: 2 }} />}
-          </button>
-          <div className={styles.timer}>{formatDuration(currentTime)}</div>
-          <div>
-            <input
-              ref={progressRef}
-              className={styles.progressBar}
-              type="range"
-              value={currentTime}
-              onChange={handleProgressBarChange}
+    <>
+      <div className={styles.spaceHolder}></div>
+      <div className={styles.container}>
+        {track.preview_url ? (
+          <div className={styles.player}>
+            <audio
+              ref={audioRef}
+              autoPlay
+              preload="metadata"
+              src={track.preview_url}
+              onLoadedMetadata={handleLoadedMetaData}
             />
+            <button
+              className={styles.playPauseButton}
+              onClick={handlePlayPause}
+            >
+              {isPlaying ? <IoPause /> : <IoPlay style={{ paddingLeft: 2 }} />}
+            </button>
+            <div className={styles.timer}>{formatDuration(currentTime)}</div>
+            <div>
+              <input
+                ref={progressRef}
+                className={styles.progressBar}
+                type="range"
+                value={currentTime}
+                onChange={handleProgressBarChange}
+              />
+            </div>
+            <div className={styles.timer}>
+              {formatDuration(1000 * audioRef.current?.duration || 0)}
+            </div>
           </div>
-          <div className={styles.timer}>
-            {formatDuration(1000 * audioRef.current?.duration || 0)}
-          </div>
-        </div>
-      ) : null}
-    </div>
+        ) : null}
+      </div>
+    </>
   );
 };
 
