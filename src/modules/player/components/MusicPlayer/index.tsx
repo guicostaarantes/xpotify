@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoArrowDown, IoArrowUp, IoPause, IoPlay } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
@@ -18,13 +18,22 @@ const MusicPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [hidden, setHidden] = useState(true);
 
+  useEffect(() => {
+    setHidden(false);
+    cancelAnimationFrame(animationRef.current);
+    animationRef.current = 0;
+  }, [track]);
+
   const handlePlayLoop = () => {
-    setCurrentTime(1000 * audioRef.current?.currentTime);
-    if (audioRef.current?.currentTime === audioRef.current?.duration) {
+    setCurrentTime(1000 * audioRef.current?.currentTime || 0);
+    if (
+      audioRef.current?.duration > 0 &&
+      audioRef.current?.currentTime === audioRef.current?.duration
+    ) {
       setHidden(true);
       setIsPlaying(false);
       setCurrentTime(0);
-    } else {
+    } else if (animationRef.current) {
       animationRef.current = requestAnimationFrame(handlePlayLoop);
     }
   };
@@ -33,7 +42,9 @@ const MusicPlayer = () => {
     setHidden(false);
     setIsPlaying(true);
     setCurrentTime(0);
-    animationRef.current = requestAnimationFrame(handlePlayLoop);
+    if (audioRef.current?.duration) {
+      animationRef.current = requestAnimationFrame(handlePlayLoop);
+    }
     if (progressRef.current) {
       progressRef.current.max = String(1000 * audioRef.current?.duration);
     }
@@ -61,57 +72,60 @@ const MusicPlayer = () => {
 
   return (
     <>
-      {track?.id ? (
-        <>
-          <div className={styles.spaceHolder}></div>
-        </>
-      ) : null}
+      <div className={styles.spaceHolder}></div>
       <div
         className={`${styles.container} ${
           hidden ? styles.hiddenContainer : ""
         }`}
       >
-        {track?.preview_url ? (
-          <>
-            <button className={styles.hideButton} onClick={handleHide}>
-              {hidden ? <IoArrowUp /> : <IoArrowDown />}
-            </button>
-            <div className={styles.player}>
-              <audio
-                ref={audioRef}
-                autoPlay
-                preload="metadata"
-                src={track.preview_url}
-                onLoadedMetadata={handleLoadedMetaData}
-              />
-              <button
-                className={styles.playPauseButton}
-                onClick={handlePlayPause}
-              >
-                {isPlaying ? (
-                  <IoPause />
-                ) : (
-                  <IoPlay className={styles.playButtonIcon} />
-                )}
-              </button>
-              <div className={styles.timer}>{formatDuration(currentTime)}</div>
-              <div>
-                <input
-                  ref={progressRef}
-                  className={styles.progressBar}
-                  type="range"
-                  value={currentTime}
-                  onChange={handleProgressBarChange}
-                />
-              </div>
-              <div className={styles.timer}>
-                {formatDuration(1000 * audioRef.current?.duration || 0)}
-              </div>
-            </div>
-          </>
-        ) : track?.id ? (
+        {track?.id ? (
+          <button className={styles.hideButton} onClick={handleHide}>
+            {hidden ? <IoArrowUp /> : <IoArrowDown />}
+          </button>
+        ) : null}
+        {track?.id ? (
           <div className={styles.player}>
-            Preview não disponível para essa música
+            <div className={styles.trackName}>
+              {track.name} - {track.artists[0].name}
+            </div>
+            {track?.preview_url ? (
+              <div className={styles.controls}>
+                <audio
+                  ref={audioRef}
+                  autoPlay
+                  preload="metadata"
+                  src={track.preview_url}
+                  onLoadedMetadata={handleLoadedMetaData}
+                />
+                <button
+                  className={styles.playPauseButton}
+                  onClick={handlePlayPause}
+                >
+                  {isPlaying ? (
+                    <IoPause />
+                  ) : (
+                    <IoPlay className={styles.playButtonIcon} />
+                  )}
+                </button>
+                <div className={styles.timer}>
+                  {formatDuration(currentTime)}
+                </div>
+                <div>
+                  <input
+                    ref={progressRef}
+                    className={styles.progressBar}
+                    type="range"
+                    value={currentTime}
+                    onChange={handleProgressBarChange}
+                  />
+                </div>
+                <div className={styles.timer}>
+                  {formatDuration(1000 * audioRef.current?.duration || 0)}
+                </div>
+              </div>
+            ) : (
+              <>Preview não disponível para essa música</>
+            )}
           </div>
         ) : null}
       </div>

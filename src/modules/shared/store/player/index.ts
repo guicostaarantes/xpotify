@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { Artist } from "#/shared/spotifyApi/types";
+
 export type PlayerState = {
-  track: { id: string; name: string; duration_ms: number; preview_url: string };
+  track: {
+    id: string;
+    name: string;
+    duration_ms: number;
+    preview_url: string;
+    artists?: Array<Artist>;
+  };
 };
 
 const initialState: PlayerState = {

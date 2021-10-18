@@ -10,6 +10,9 @@ jest.mock("react-router-dom", () => ({
   useParams: () => ({
     albumId: "1234",
   }),
+  useHistory: () => ({
+    goBack: () => 0,
+  }),
 }));
 jest.mock("#/artist/hooks/useAlbum");
 
