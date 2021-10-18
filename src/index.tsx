@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AlbumPage from "#/artist/pages/Album";
 import ArtistAlbumsPage from "#/artist/pages/ArtistAlbums";
+import MusicPlayer from "#/player/components/MusicPlayer";
 import TokenWatcher from "#/shared/components/TokenWatcher";
 import store from "#/shared/store";
 import StartPage from "#/start/pages/Start";
@@ -30,6 +31,7 @@ const XpotifyApp = () => (
           <StartPage />
         </Route>
       </Switch>
+      <MusicPlayer />
     </BrowserRouter>
   </Provider>
 );

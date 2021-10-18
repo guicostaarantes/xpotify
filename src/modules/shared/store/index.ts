@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { searchReducer } from "#/shared/store//search";
+import { playerReducer } from "#/shared/store/player";
+import { searchReducer } from "#/shared/store/search";
 import { userReducer } from "#/shared/store/user";
 
 const store = configureStore({
   reducer: {
+    player: playerReducer,
     search: searchReducer,
     user: userReducer,
   },

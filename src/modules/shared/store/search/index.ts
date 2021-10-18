@@ -74,8 +74,7 @@ export const setSearchResultFromSearchString =
           dispatch(setFetchSearchStatus("success"));
           dispatch(setSearchResult(data));
         } else {
-          const data = await response.json();
-          if (data.error?.message === "Invalid access token") {
+          if (response.status === 401) {
             dispatch(invalidateToken());
           }
           dispatch(setFetchSearchStatus("fail"));

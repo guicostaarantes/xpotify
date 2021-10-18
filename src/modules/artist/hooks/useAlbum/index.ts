@@ -24,8 +24,7 @@ const useAlbum = (albumId: string) => {
         setFetchStatus("success");
       } else {
         setFetchStatus("fail");
-        const data = await response.json();
-        if (data.error?.message === "Invalid access token") {
+        if (response.status === 401) {
           dispatch(invalidateToken());
         }
       }
