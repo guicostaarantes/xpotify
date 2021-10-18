@@ -1,4 +1,10 @@
 .mainTitle {
   color: var(--grey-1);
-  font-size: 3em;
+  font-size: 24px;
+}
+
+@media (min-width: 800px) {
+  .mainTitle {
+    font-size: 48px;
+  }
 }
