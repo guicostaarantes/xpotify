@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { ApplicationState } from "#/shared/store";
+import { visitAlbum } from "#/shared/store/history";
 import { selectTrack } from "#/shared/store/player";
 import {
   setSearchResultFromSearchString,
   setSearchStringDebounced,
 } from "#/shared/store/search";
+import LatestVisitedAlbums from "#/start/components/VisitedAlbums";
 import AlbumCard from "#/styleguide/components/AlbumCard";
 import Input from "#/styleguide/components/Input";
 import Paragraph from "#/styleguide/components/Paragraph";
@@ -35,6 +37,11 @@ const StartPage = () => {
   const handleSetSearchString = (event: ChangeEvent<HTMLInputElement>) =>
     dispatch(setSearchStringDebounced(event.target.value, 500));
 
+  const handleClickAlbum = (album: any) => {
+    dispatch(visitAlbum(album));
+    history.push(`/album/${album.id}`);
+  };
+
   return (
     <div className={styles.container}>
       <label className={styles.searchLabel} htmlFor="search">
@@ -55,7 +62,7 @@ const StartPage = () => {
             {searchResult.albums.items.map((album) => (
               <AlbumCard
                 key={album.id}
-                onClick={() => history.push(`/album/${album.id}`)}
+                onClick={() => handleClickAlbum(album)}
                 src={album.images?.[0]?.url}
                 primaryText={album.name}
                 secondaryText={album.artists[0].name}
@@ -98,9 +105,7 @@ const StartPage = () => {
         </>
       ) : null}
       {fetchSearchStatus === "idle" ? (
-        <Paragraph className={styles.searchResultMessage}>
-          Termos buscados recentemente (WIP)
-        </Paragraph>
+        <LatestVisitedAlbums />
       ) : fetchSearchStatus === "loading" ? (
         <Paragraph className={styles.searchResultMessage}>
           Carregando resultados...
