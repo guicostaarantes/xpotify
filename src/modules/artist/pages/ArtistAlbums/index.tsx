@@ -28,10 +28,14 @@ const ArtistAlbumsPage = () => {
       {status === "loading" ? (
         <Paragraph>Carregando...</Paragraph>
       ) : status === "fail" ? (
-        <Paragraph>Ocorreu um erro na sua busca</Paragraph>
+        <Paragraph>
+          Não foi possível carregar os álbuns desse artista.
+        </Paragraph>
       ) : status === "success" ? (
         !data.artist ? (
-          <Paragraph>Não foram encontrados álbuns para esse artista</Paragraph>
+          <Paragraph>
+            Não foram encontrados dados para o artista buscado.
+          </Paragraph>
         ) : (
           <>
             <MainTitle>Álbuns de {data.artist.name}</MainTitle>
