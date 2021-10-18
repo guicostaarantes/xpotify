@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import spotifyApi from "#/shared/spotifyApi";
+import { SearchResult } from "#/shared/spotifyApi/types";
 import { invalidateToken } from "#/shared/store/user";
 
 export type SearchState = {
   fetchSearchStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
-  searchResult: any;
+  searchResult: SearchResult;
   searchString: string;
 };
 
@@ -30,7 +31,7 @@ const setTypingReducer = (state: SearchState, action: { payload: number }) => {
 
 const setSearchResultReducer = (
   state: SearchState,
-  action: { payload: any },
+  action: { payload: SearchState["searchResult"] },
 ) => {
   state.searchResult = action.payload;
 };

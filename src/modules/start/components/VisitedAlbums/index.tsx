@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
+import { Album } from "#/shared/spotifyApi/types";
 import { ApplicationState } from "#/shared/store";
 import { visitAlbum } from "#/shared/store/history";
 import AlbumCard from "#/styleguide/components/AlbumCard";
@@ -16,7 +17,7 @@ const LatestVisitedAlbums = () => {
 
   const history = useHistory();
 
-  const handleClickAlbum = (album: any) => {
+  const handleClickAlbum = (album: Album) => {
     dispatch(visitAlbum(album));
     history.push(`/album/${album.id}`);
   };

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import useArtistAlbums from "#/artist/hooks/useArtistAlbums";
+import { Album } from "#/shared/spotifyApi/types";
 import { visitAlbum } from "#/shared/store/history";
 import AlbumCard from "#/styleguide/components/AlbumCard";
 import MainTitle from "#/styleguide/components/MainTitle";
@@ -17,7 +18,7 @@ const ArtistAlbumsPage = () => {
 
   const { data, status } = useArtistAlbums(artistURLString);
 
-  const handleClickAlbum = (album: any) => {
+  const handleClickAlbum = (album: Album) => {
     dispatch(visitAlbum(album));
     history.push(`/album/${album.id}`);
   };

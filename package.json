@@ -7,7 +7,7 @@
   "scripts": {
     "build-stg": "yarn install && webpack --config webpack.stg.js",
     "build": "yarn install && webpack --config webpack.prod.js",
-    "ci": "yarn lint && yarn test",
+    "ci": "tsc --noEmit && yarn lint && yarn test",
     "lint": "eslint",
     "test": "jest",
     "start": "yarn install && webpack serve --open --config webpack.dev.js"

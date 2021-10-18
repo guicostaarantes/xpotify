@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import { Album } from "#/shared/spotifyApi/types";
 import { ApplicationState } from "#/shared/store";
 import { visitAlbum } from "#/shared/store/history";
 import { selectTrack } from "#/shared/store/player";
@@ -37,7 +38,7 @@ const StartPage = () => {
   const handleSetSearchString = (event: ChangeEvent<HTMLInputElement>) =>
     dispatch(setSearchStringDebounced(event.target.value, 500));
 
-  const handleClickAlbum = (album: any) => {
+  const handleClickAlbum = (album: Album) => {
     dispatch(visitAlbum(album));
     history.push(`/album/${album.id}`);
   };
