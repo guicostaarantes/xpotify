@@ -1,0 +1,11 @@
+.container {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--grey-1);
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  outline: none;
+  padding: 16px;
+}

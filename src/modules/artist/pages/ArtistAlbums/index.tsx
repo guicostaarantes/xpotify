@@ -6,6 +6,7 @@ import useArtistAlbums from "#/artist/hooks/useArtistAlbums";
 import { Album } from "#/shared/spotifyApi/types";
 import { visitAlbum } from "#/shared/store/history";
 import AlbumCard from "#/styleguide/components/AlbumCard";
+import BackButton from "#/styleguide/components/BackButton";
 import MainTitle from "#/styleguide/components/MainTitle";
 import Paragraph from "#/styleguide/components/Paragraph";
 
@@ -25,34 +26,37 @@ const ArtistAlbumsPage = () => {
 
   return (
     <div className={styles.container}>
-      {status === "loading" ? (
-        <Paragraph>Carregando...</Paragraph>
-      ) : status === "fail" ? (
-        <Paragraph>
-          Não foi possível carregar os álbuns desse artista.
-        </Paragraph>
-      ) : status === "success" ? (
-        !data.artist ? (
+      <BackButton />
+      <div className={styles.artistContent}>
+        {status === "loading" ? (
+          <Paragraph>Carregando...</Paragraph>
+        ) : status === "fail" ? (
           <Paragraph>
-            Não foram encontrados dados para o artista buscado.
+            Não foi possível carregar os álbuns desse artista.
           </Paragraph>
-        ) : (
-          <>
-            <MainTitle>Álbuns de {data.artist.name}</MainTitle>
-            <div className={styles.albumCardGrid}>
-              {data.albums.items.map((album) => (
-                <AlbumCard
-                  key={album.id}
-                  onClick={() => handleClickAlbum(album)}
-                  src={album.images?.[0]?.url}
-                  primaryText={album.name}
-                  secondaryText={album.artists[0].name}
-                />
-              ))}
-            </div>
-          </>
-        )
-      ) : null}
+        ) : status === "success" ? (
+          !data.artist ? (
+            <Paragraph>
+              Não foram encontrados dados para o artista buscado.
+            </Paragraph>
+          ) : (
+            <>
+              <MainTitle>Álbuns de {data.artist.name}</MainTitle>
+              <div className={styles.albumCardGrid}>
+                {data.albums.items.map((album) => (
+                  <AlbumCard
+                    key={album.id}
+                    onClick={() => handleClickAlbum(album)}
+                    src={album.images?.[0]?.url}
+                    primaryText={album.name}
+                    secondaryText={album.artists[0].name}
+                  />
+                ))}
+              </div>
+            </>
+          )
+        ) : null}
+      </div>
     </div>
   );
 };

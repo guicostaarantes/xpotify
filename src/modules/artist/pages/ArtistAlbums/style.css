@@ -6,10 +6,13 @@
   width: 100%;
 }
 
-.container {
+.artistContent {
   align-items: center;
   display: flex;
   flex-direction: column;
+}
+
+.container {
   margin: 0 auto;
   max-width: 1200px;
   padding: 16px;
