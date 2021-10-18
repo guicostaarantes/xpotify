@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export type PlayerState = {
-  track:
-    | { id: string; name: string; duration_ms: number; preview_url: string }
-    | Record<string, never>;
+  track: { id: string; name: string; duration_ms: number; preview_url: string };
 };
 
 const initialState: PlayerState = {
-  track: {},
+  track: undefined,
 };
 
 const setTrackReducer = (
@@ -31,8 +29,7 @@ const { setTrack } = playerSlice.actions;
 
 export const selectTrack =
   (track: PlayerState["track"]) => (dispatch, getState) => {
-    if (track.id !== getState().player.track.id) {
-      console.log({ track });
+    if (track.id !== getState().player.track?.id) {
       dispatch(setTrack(track));
     }
   };

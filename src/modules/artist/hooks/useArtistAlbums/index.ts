@@ -10,9 +10,7 @@ const useArtistAlbums = (artistURLString: string) => {
   const token = useSelector((store: ApplicationState) => store.user.token);
   const dispatch = useDispatch();
 
-  const [artistData, setArtistData] = useState<Artist | Record<string, never>>(
-    {},
-  );
+  const [artistData, setArtistData] = useState<Artist>();
   const [albumsData, setAlbumsData] = useState<{ items?: Array<Album> }>({});
   const [fetchStatus, setFetchStatus] = useState<
     "idle" | "loading" | "success" | "fail"

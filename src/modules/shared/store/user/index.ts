@@ -6,19 +6,17 @@ export type UserState = {
   fetchUserStatus: "idle" | "loading" | "success" | "fail";
   typing: number;
   token: string;
-  user:
-    | {
-        name: string;
-        image: string;
-      }
-    | Record<string, never>;
+  user: {
+    name: string;
+    image: string;
+  };
 };
 
 const initialState: UserState = {
   fetchUserStatus: "idle",
   typing: 0,
   token: localStorage.getItem("token") || "",
-  user: {},
+  user: undefined,
 };
 
 const setFetchUserStatusReducer = (
@@ -79,14 +77,14 @@ export const setUserDataFromToken = (token: string) => async (dispatch) => {
         );
       } else {
         dispatch(setFetchUserStatus("fail"));
-        dispatch(setUser({}));
+        dispatch(setUser(undefined));
       }
     } else {
       dispatch(setFetchUserStatus("idle"));
     }
   } catch {
     dispatch(setFetchUserStatus("fail"));
-    dispatch(setUser({}));
+    dispatch(setUser(undefined));
   }
 };
 
