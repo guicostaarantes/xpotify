@@ -61,7 +61,7 @@ const MusicPlayer = () => {
 
   return (
     <>
-      {track.id ? (
+      {track?.id ? (
         <>
           <div className={styles.spaceHolder}></div>
         </>
@@ -71,7 +71,7 @@ const MusicPlayer = () => {
           hidden ? styles.hiddenContainer : ""
         }`}
       >
-        {track.preview_url ? (
+        {track?.preview_url ? (
           <>
             <button className={styles.hideButton} onClick={handleHide}>
               {hidden ? <IoArrowUp /> : <IoArrowDown />}
@@ -109,7 +109,7 @@ const MusicPlayer = () => {
               </div>
             </div>
           </>
-        ) : track.id ? (
+        ) : track?.id ? (
           <div className={styles.player}>
             Preview não disponível para essa música
           </div>

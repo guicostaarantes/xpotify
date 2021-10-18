@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import spotifyApi from "#/shared/spotifyApi";
+import { Album, Artist } from "#/shared/spotifyApi/types";
 import { ApplicationState } from "#/shared/store";
 import { invalidateToken } from "#/shared/store/user";
 
@@ -9,8 +10,8 @@ const useArtistAlbums = (artistURLString: string) => {
   const token = useSelector((store: ApplicationState) => store.user.token);
   const dispatch = useDispatch();
 
-  const [artistData, setArtistData] = useState<any>({});
-  const [albumsData, setAlbumsData] = useState<any>({});
+  const [artistData, setArtistData] = useState<Artist>();
+  const [albumsData, setAlbumsData] = useState<{ items?: Array<Album> }>({});
   const [fetchStatus, setFetchStatus] = useState<
     "idle" | "loading" | "success" | "fail"
   >("idle");
